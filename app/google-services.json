@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "274046400271",
+    "project_id": "naulo-4d6b0",
+    "storage_bucket": "naulo-4d6b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274046400271:android:46a4c107ead923f7c7f07a",
+        "android_client_info": {
+          "package_name": "com.xar.naulo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274046400271-92km36q4mhhva20tkbssfc3ahmkeolc6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY1j8ey35jQZdpfu1KvanUbPbZdXy7Adc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274046400271-92km36q4mhhva20tkbssfc3ahmkeolc6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
