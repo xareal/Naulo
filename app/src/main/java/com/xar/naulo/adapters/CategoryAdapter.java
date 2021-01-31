@@ -1,4 +1,4 @@
-package com.xar.naulo;
+package com.xar.naulo.adapters;
 
 
 import android.content.Context;
@@ -51,17 +51,4 @@ public class CategoryAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 3;
     }
-
-    /*
-    @Nullable
-    public CharSequence getPageTitle(int position) {
-        if (position == 0) {
-            return mContext.getString(R.string.category_you);
-        } else if (position == 1) {
-            return mContext.getString(R.string.category_following);
-        } else {
-            return mContext.getString(R.string.category_global);
-        }
-    }
-     */
 }

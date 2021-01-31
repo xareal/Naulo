@@ -3,21 +3,24 @@ package com.xar.naulo;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class BaseActivity extends AppCompatActivity {
 
+	@VisibleForTesting
 	private ProgressBar mProgressBar;
 
-	public void setProgressBar(int resId) {
-		mProgressBar = findViewById(resId);
+	public void setProgressBar(ProgressBar resId) {
+
+		mProgressBar = resId;
 	}
 
 	public void showProgressBar() {
 		if (mProgressBar != null) {
-			mProgressBar.setVisibility(View.VISIBILE);
+			mProgressBar.setVisibility(View.VISIBLE);
 		}
 	}
 

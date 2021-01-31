@@ -6,12 +6,11 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +20,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.xar.lore.databinding.ActivityGoogleBinding;
+import com.xar.naulo.databinding.ActivityGoogleBinding;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import com.xar.naulo.models.User;
 
 /**
 * Determine Firebase Authentication using a Google ID token.
@@ -34,6 +38,9 @@ public class GoogleSignInActivity extends BaseActivity implements View.OnClickLi
 	// Start declare auth
 	private FirebaseAuth mAuth;
 
+	private DatabaseReference mDatabase;
+
+
 	private GoogleSignInClient mGoogleSignInClient;
 	private ActivityGoogleBinding mBinding;
 
@@ -44,10 +51,9 @@ public class GoogleSignInActivity extends BaseActivity implements View.OnClickLi
 		setContentView(mBinding.getRoot());
 		setProgressBar(mBinding.progressBar);
 
+
 		// Button listeners
 		mBinding.signInButton.setOnClickListener(this);
-		mBinding.signOutButton.setOnClickListener(this);
-		mBinding.disconnectButton.setOnClickListener(this);
 
 		// Start config signin
 		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -59,6 +65,9 @@ public class GoogleSignInActivity extends BaseActivity implements View.OnClickLi
 		
 		// Initialize Firebase Auth
 		mAuth = FirebaseAuth.getInstance();		
+
+		// Initialize Database
+		mDatabase = FirebaseDatabase.getInstance().getReference();
 	}
 
 	@Override
@@ -66,7 +75,11 @@ public class GoogleSignInActivity extends BaseActivity implements View.OnClickLi
 		super.onStart();
 		// Check if user is signed in (non-null) and update UI accordingly
 		FirebaseUser currentUser = mAuth.getCurrentUser();
-		updateUI(currentUser);
+		
+		if (currentUser !=  null) {
+			onAuthSuccess(currentUser);
+
+		}
 	}
 
 	@Override
@@ -99,7 +112,7 @@ public class GoogleSignInActivity extends BaseActivity implements View.OnClickLi
 							// Sign in success, update UI with the signed-in user's information
 							Log.d(TAG, "signInWithCredential: success");
 							FirebaseUser user = mAuth.getCurrentUser();
-							updateUI(user);
+							onAuthSuccess(user);
 						} else {
 							// If sign in fails, display a message to the user
 							Log.w(TAG, "signInWithCredential: failure", task.getException());
@@ -112,6 +125,40 @@ public class GoogleSignInActivity extends BaseActivity implements View.OnClickLi
 				});
 	}
 	// End auth_with_google
+
+	// TODO: change email sign in to google signin
+	// On Success to signin go to MainActivity
+	private void onAuthSuccess(FirebaseUser user) {
+		user = FirebaseAuth.getInstance().getCurrentUser();
+
+		// Name email address, and profile photo Url
+		String uid = user.getUid();
+		String name = user.getDisplayName();
+		String email = user.getEmail();
+		// Uri photoUrl = user.getPhotoUrl();
+	
+		 	
+
+	 	// Write new user
+		writeNewUser(uid, name, email);
+
+		// Go to MainActivity
+		startActivity(new Intent(getApplicationContext(), MainActivity.class));
+		finish();
+		
+	}
+
+
+
+
+	// TODO: change email sign in to google sign in
+	// [Start basic_write]
+	private void writeNewUser(String userId, String name, String email) {
+		User user = new User(name, email);
+		
+		mDatabase.child("users").child(userId).setValue(user);
+	}
+	// [End basic write]
 
 	// Start signin
 	private void signIn() {
@@ -152,7 +199,7 @@ public class GoogleSignInActivity extends BaseActivity implements View.OnClickLi
 			mBinding.status.setText(getString(R.string.firebase_status_fmt, user.getUid()));
 
 			mBinding.signInButton.setVisibility(View.GONE);
-			mBinding.signOutAndDisconnect.setVisibility(View.VISIBLE);		
+			mBinding.signOutAndDisconnect.setVisibility(View.VISIBLE);
 		} else {
 			mBinding.status.setText(R.string.signed_out);
 			mBinding.detail.setText(null);
@@ -167,10 +214,6 @@ public class GoogleSignInActivity extends BaseActivity implements View.OnClickLi
         int i = v.getId();
         if (i == R.id.signInButton) {
             signIn();
-        } else if (i == R.id.signOutButton) {
-            signOut();
-        } else if (i == R.id.disconnectButton) {
-            revokeAccess();
         }
     }
 }

@@ -1,46 +1,50 @@
-package com.xar.naulo;
+package com.xar.naulo.models;
+
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 
+import java.util.HashMap;
+import java.util.Map;
+import java.net.URL;
+
+@IgnoreExtraProperties
 public class Post {
 
-    private int mTitleId;
-    private String mUrlId;
+	public String uid;
+	public String author;
+	public String title;
+	public String body;
+	public int starCount = 0;
+	public Map<String, Boolean> stars = new HashMap<>();
 
+	public Post() {
+		// Required empty constructor
+	}
 
-    private int mImageResourceId = NO_IMAGE_PROVIDED;
-    private static final int NO_IMAGE_PROVIDED = -1;
+	public Post(String uid, String author, String title, String body) {
+		this.uid = uid;
+		this.author = author;
+		this.title = title;
+		this.body = body;
+	}
 
+	// [Start post to map]
+	@Exclude
+	public Map<String, Object> toMap() {
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("uid", uid);
+		result.put("author", author);
+		result.put("title", title);
+		result.put("body", body);
+		result.put("starCount", starCount);
+		result.put("stars", stars);
 
-    // Create a new Post object with image being not available
-    public Post(int titleId, String urlId) {
-        mTitleId = titleId;
-        mUrlId = urlId;
-    }
+		return result;
+	}
+	// [End post to map]
 
-
-    //  Create a new Post object with image being available
-    public Post(int titleId, String urlId, int imageResourceId) {
-        mTitleId = titleId;
-        mUrlId = urlId;
-        mImageResourceId = imageResourceId;
-    }
-
-    // Return resource ids' of post
-    public int getTitleId() {
-        return mTitleId;
-    }
-
-    public int getImageResourceId() {
-        return mImageResourceId;
-    }
-
-    // Return and set url
-    public String getUrlId() {
-        return mUrlId;
-    }
-    public void setUrl(String url) { this.mUrlId = url; }
-
-    // Return whether or not there is image for this post
-    public boolean hasImage() { return mImageResourceId != NO_IMAGE_PROVIDED; }
-
+	public String getUrl() {
+		return body;
+	}
 }
