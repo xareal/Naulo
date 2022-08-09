@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "274046400271",
+    "firebase_url": "https://naulo-4d6b0-default-rtdb.firebaseio.com",
     "project_id": "naulo-4d6b0",
     "storage_bucket": "naulo-4d6b0.appspot.com"
   },
@@ -13,6 +14,30 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "274046400271-ftp887r0569c5v5ln715oht856dqum89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xar.naulo",
+            "certificate_hash": "c5a0e0138cc2d016a31889bf3b552eeab305cd77"
+          }
+        },
+        {
+          "client_id": "274046400271-psjrcpbgafio7qh16488f15g9rdv2bfm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xar.naulo",
+            "certificate_hash": "4e0b819bc7c0962900a11c39d12e76183a5d706e"
+          }
+        },
+        {
+          "client_id": "274046400271-vll47mo5tlto6s6d0cpcqhvk38nb78vk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xar.naulo",
+            "certificate_hash": "6b669748cc30c33b38fbcd0904e182cf6982c337"
+          }
+        },
         {
           "client_id": "274046400271-92km36q4mhhva20tkbssfc3ahmkeolc6.apps.googleusercontent.com",
           "client_type": 3
